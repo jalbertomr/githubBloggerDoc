@@ -1,0 +1,46 @@
+@startuml
+scale 350 width
+title <color:silver><size:25>Smashing Commit, before git reset --hard HEAD~         jalbertomr.blogspot.com
+skinparam backgroundColor royalblue
+skinparam arrowcolor white
+skinparam arrowfontStyle bold
+skinparam arrowfontcolor w
+
+skinparam state {
+  backgroundColor SkyBlue
+  BorderColor gray
+  backgroundColor<< Stage >> LimeGreen
+  backgroundColor<< WorkDir >> Tomato
+  backgroundColor<< History >> Khaki
+  FontSize 16
+  FontStyle bold
+  fontcolor navy
+}
+
+state Working_Directory << WorkDir >>
+state "Stage (index)" as Stage  << Stage >>
+state _HEAD <<History>>
+
+state HEAD
+state master
+state 289e5c1 <<History>>
+state 5cd6744 <<History>>
+state 95575a2 <<History>>
+
+
+[*] --> 289e5c1 : commit_01
+289e5c1 --> 5cd6744 : commit_02
+5cd6744 --> 95575a2 : commit_03
+289e5c1 : <size:20>file1:v1\n
+5cd6744 : <size:20>file1:v2\n
+95575a2 : <size:20>file1:v3\n
+HEAD -right-> master
+master -right-> 95575a2
+
+Working_Directory : \n<size:20>file1:v3\n
+Stage : \n<size:20>file1:v3\n
+_HEAD : <size:16>95575a2\n<size:20>file1:v3\n
+
+
+
+@enduml

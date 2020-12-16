@@ -1,0 +1,45 @@
+@startuml
+scale 350 width
+title <color:silver><size:25>Branch and Merge on Y tree with files. before    merge branch_01                                                      .\n jalbertomr.blogspot.com
+
+skinparam backgroundColor royalblue
+skinparam arrowcolor white
+skinparam arrowfontStyle bold
+skinparam arrowfontcolor w
+
+skinparam state {
+  backgroundColor SkyBlue
+  BorderColor gray
+  backgroundColor<< Stage >> LimeGreen
+  backgroundColor<< WorkDir >> Tomato
+  backgroundColor<< History >> Khaki
+  FontSize 16
+  FontStyle bold
+  fontcolor navy
+}
+
+state Working_Directory << WorkDir >>
+
+state HEAD
+state master
+state branch_01
+state 3f95103 <<History>>
+state 5ec83b9 <<History>>
+state fe45123 <<History>>
+
+
+[*] -up-> 3f95103 : commit_01
+3f95103 -up-> fe45123 : commit_03
+3f95103 -left-> 5ec83b9  : commit_02
+3f95103 : <size:20>file1                   \n\n<size:20>A\n<size:20>B
+5ec83b9 : <size:20>file1              file2\n<size:20>A                  A\n<size:20>B\n<size:20>-->file2 A
+fe45123 : <size:20>file1              file2\n<size:20>A                  B\n<size:20>B                  \n<size:20>-->file2 B
+HEAD -right-> master
+master -right-> 5ec83b9
+branch_01 -right-> fe45123
+
+Working_Directory : <size:20>file1              file2\n<size:20>A                  A\n<size:20>B\n<size:20>-->file2 A
+
+
+
+@enduml

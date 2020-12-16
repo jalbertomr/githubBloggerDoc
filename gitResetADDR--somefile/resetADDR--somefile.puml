@@ -1,0 +1,80 @@
+@startuml
+scale 1500 width
+title git reset ADDRESS -- someFile
+skinparam roundCorner 20
+actor User
+box "<size:20>GIT                     jalbertomr.blogspot.com</size>"
+participant "Working dir" as WD #FF5555
+participant "Stage" as S #99FF99
+database "commit 1" as C1
+database "commit 2" as C2
+database "commit 3" as C3
+
+== git reset ADDRESS -- someFile ==
+== Make 3 commits ==
+User -> WD:  create file1:v1
+note right of WD #lightgray
+file1:v1
+end note
+note left of S #Salmon
+file1:v1
+end note
+User-> S : <color:limegreen><back:black><b> git add file1 </b></back></color>
+note right of S #99FF99
+file1:v1
+end note
+User-> C1 : <color:limegreen><back:black><b> git commit -m "file1:v1" </b></back></color>
+note right of C1
+HEAD
+file1:v1
+end note
+
+User -> WD:  update file1:v1->v2
+note right of WD #lightgray
+file1:v2
+end note
+note left of S #Salmon
+file1:v2
+end note
+
+User-> C2 : <color:limegreen><back:black><b> git commit -am "file1" </b></back></color>
+note right of C2
+HEAD
+file1:v2
+end note
+
+User -> WD:  update file1.v2->v3
+note right of WD #lightgray
+file1:v3
+end note
+note left of S #Salmon
+file1:v3
+end note
+
+User-> C3 : <color:limegreen><back:black><b> git commit -am "file1" </b></back></color>
+note right of C3
+HEAD
+file1:v3
+end note
+
+== Apply command: git reset ADDRESS -- someFile (first commit)==
+
+User -> C1 : <color:limegreen><back:black><b> git reset 289e5 -- file1 </b></back></color>
+note right of C1
+HEAD
+file1:v3
+end note
+note right of S #99FF99
+file1:v3->v1
+end note
+note left of S #Salmon
+file1:v1->v3
+end note
+
+note right of WD #lightgray
+file1:v3
+end note
+
+
+
+@enduml

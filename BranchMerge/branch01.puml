@@ -1,0 +1,52 @@
+@startuml
+scale 350 width
+title <color:silver><size:25>Very simple Branch and Merge                                    jalbertomr.blogspot.com
+
+skinparam backgroundColor royalblue
+skinparam arrowcolor white
+skinparam arrowfontStyle bold
+skinparam arrowfontcolor w
+
+skinparam state {
+  backgroundColor SkyBlue
+  BorderColor gray
+  backgroundColor<< Stage >> LimeGreen
+  backgroundColor<< WorkDir >> Tomato
+  backgroundColor<< History >> Khaki
+  FontSize 16
+  FontStyle bold
+  fontcolor navy
+}
+
+
+state Working_Directory << WorkDir >>
+state "Stage (index)" as Stage  << Stage >>
+state _HEAD <<History>>
+
+state HEAD
+state master
+state branch_01
+state 48ed828 <<History>>
+state 3f95103 <<History>>
+state 5ec83b9 <<History>>
+state fe45123 <<History>>
+
+
+[*] -up-> 48ed828 : commit_01
+48ed828 -up-> 3f95103 : commit_02
+3f95103 -up-> 5ec83b9 : commit_03
+5ec83b9 -up-> fe45123 : commit_04
+48ed828 :
+3f95103 :
+5ec83b9 :
+HEAD -right-> master
+master -right-> 3f95103
+branch_01 -right-> fe45123
+
+Working_Directory : \n<size:20>\n<size:20>.
+Stage : \n<size:20>\n<size:20>.
+_HEAD : <size:16>3f95103\n<size:20>\n<size:20>.
+
+
+
+@enduml

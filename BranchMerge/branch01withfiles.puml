@@ -1,0 +1,45 @@
+@startuml
+scale 350 width
+title <color:silver><size:25>Very simple Branch and Merge with files before merge branch_01\n jalbertomr.blogspot.com
+
+skinparam backgroundColor royalblue
+skinparam arrowcolor white
+skinparam arrowfontStyle bold
+skinparam arrowfontcolor w
+
+skinparam state {
+  backgroundColor SkyBlue
+  BorderColor gray
+  backgroundColor<< Stage >> LimeGreen
+  backgroundColor<< WorkDir >> Tomato
+  backgroundColor<< History >> Khaki
+  FontSize 16
+  FontStyle bold
+  fontcolor navy
+}
+
+state HEAD
+state master
+state branch_01
+state 48ed828 <<History>>
+state 3f95103 <<History>>
+state 5ec83b9 <<History>>
+state fe45123 <<History>>
+
+
+[*] -up-> 48ed828 : commit_01
+48ed828 -up-> 3f95103 : commit_02
+3f95103 -up-> 5ec83b9 : commit_03
+5ec83b9 -up-> fe45123 : commit_04
+48ed828 : <size:20>file1                   \n\n<size:20>A
+3f95103 : <size:20>file1                   \n\n<size:20>A\n<size:20>B
+5ec83b9 : <size:20>file1              file2\n<size:20>A                  A\n<size:20>B\n<size:20>-->file2 A
+fe45123 : <size:20>file1              file2\n<size:20>A                  A\n<size:20>B                  B\n<size:20>-->file2 A\n<size:20>-->file2 B
+HEAD -right-> master
+master -right-> 3f95103
+branch_01 -right-> fe45123
+
+
+
+
+@enduml

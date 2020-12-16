@@ -1,0 +1,85 @@
+@startuml
+scale 1500 width
+title git checkout vs reset
+skinparam roundCorner 20
+actor User
+box "<size:20>GIT                     jalbertomr.blogspot.com</size>"
+participant "Working dir" as WD #salmon
+participant "Stage" as S #technology
+database "commit 1" as C1
+database "commit 2" as C2
+==  create two commits with two files, branch only for reference==
+User -> C1:  ...commit file1:v1,file2:v1
+note left of C1 #lightgray
+STATE                  HEAD
+<color:black><back:salmon> WD       <back:technology> Stage
+<b> file1:v1 <b> file1:v1 </b><color:black><back:yellow><b> file1:v1 </b></back></color>
+<b> file2:v1 <color:black><b> file2:v1 </b><color:black><back:yellow><b> file2:v1 </b></back></color>
+end note
+User-> C1 : <color:limegreen><back:black><b> git branch principal </b></back></color>
+note left of C1
+principal
+file1:v1
+file2:v1
+end note
+User -> C2:  ...update file1:v2,file2:v2 and commit
+note left of C2 #lightgray
+STATE                  HEAD
+<color:black><back:salmon> WD       <back:technology> Stage
+<b> file1:v2 <b> file2:v2 </b><color:black><back:yellow><b> file1:v2 </b></back></color>
+<b> file2:v2 <b> file2:v2 </b><color:black><back:yellow><b> file2:v2 </b></back></color>
+end note
+
+User-> C2 : <color:limegreen><back:black><b> git branch develop </b></back></color>
+note left of C2
+develop
+file1:v2
+file2:v2
+end note
+== Apply checkout to Commit 1, the state is the same as commit 1 ==
+User-> C2 : <color:limegreen><back:black><b> git checkout principal </b></back></color>
+C2 -> C1
+note left of C1 #lightgray
+STATE                  HEAD
+<color:black><back:salmon> WD       <back:technology> Stage
+<b> file1:v1 <b> file1:v1 </b><color:black><back:yellow><b> file1:v1 </b></back></color>
+<b> file2:v1 <color:black><b> file2:v1 </b><color:black><back:yellow><b> file2:v1 </b></back></color>
+end note
+
+== return to commit 2, in order to apply reset ==
+User-> C1 : <color:limegreen><back:black><b> git checkout develop </b></back></color>
+C1 -> C2
+note left of C2 #lightgray
+STATE                  HEAD
+<color:black><back:salmon> WD       <back:technology> Stage
+<b> file1:v2 <b> file2:v2 </b><color:black><back:yellow><b> file1:v2 </b></back></color>
+<b> file2:v2 <b> file2:v2 </b><color:black><back:yellow><b> file2:v2 </b></back></color>
+end note
+
+User-> C2 : <color:limegreen><back:black><b> git reset principal </b></back></color>
+C2 -> C1
+note left of C1
+principal
+end note
+note left of C1
+develop
+end note
+
+note left of C1 #lightgray
+STATE                  HEAD
+<color:black><back:salmon> WD       <back:technology> Stage
+<b> file1:v2 <back:crimson><b> file1:v1 </b><color:black><back:yellow><b> file1:v1 </b></back></color>
+<b> file2:v2 <back:crimson><b> file2:v1 </b><color:black><back:yellow><b> file2:v1 </b></back></color>
+end note
+== Now Branche develop point to principal\nStage has unstaged files, two options: add or restore ==
+User-> C1 : <color:limegreen><back:black><b> git add file1 </b></back></color>
+User-> C1 : <color:limegreen><back:black><b> git restore file2 </b></back></color>
+
+note left of C1 #lightgray
+STATE                  HEAD
+<color:black><back:salmon> WD       <back:technology> Stage
+<b> file1:v2 <back:limegreen><b> file1:v2 </b><color:black><back:yellow><b> file1:v1 </b></back></color>
+<b> file2:v1 <b> file2:v1 </b><color:black><back:yellow><b> file2:v1 </b></back></color>
+end note
+== add: apply the develop state (commit 2) and ready to commit\nrestore: leaves intact the principal state (commit 1)==
+@enduml

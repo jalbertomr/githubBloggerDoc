@@ -1,0 +1,26 @@
+@startuml
+scale 600 width
+title create file, add, commit
+skinparam roundCorner 20
+actor User
+box "<size:20>GIT                     jalbertomr.blogspot.com</size>"
+participant "Working dir" as WD #FF5555
+participant "Stage" as S #99FF99
+database "History" as H
+
+== create file1, add, commit ==
+User -> WD : create file1
+note left of S #Salmon
+file1 created
+end note
+WD -> S : <color:limegreen><back:black><b> git add file1 </b></back></color>    .
+note right of S #99FF99
+file1 created
+end note
+
+S -> H : <color:limegreen><back:black><b> git commit -m "file1 created" </b></back></color>    .
+note right of H
+file1 created
+end note
+
+@enduml

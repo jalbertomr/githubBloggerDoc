@@ -1,0 +1,26 @@
+@startuml
+scale 600 width
+title create file, add, reset, delete
+skinparam roundCorner 20
+actor User
+box "<size:20>GIT                     jalbertomr.blogspot.com</size>"
+participant "Working dir" as WD #FF5555
+participant "Stage" as S #99FF99
+database "History" as H
+
+== create file2, add, reset, delete ==
+User -> WD : create file2
+note left of S #Salmon
+file2 created
+end note
+WD -> S : <color:limegreen><back:black><b> git add file2 </b></back></color>    .
+note right of S #99FF99
+file2 created
+end note
+
+S -> WD : <color:limegreen><back:black><b> git [ reset | reset file2 | reset HEAD file2 ] </b></back></color>    .
+note left of S #Salmon
+file2 created
+end note
+WD --> User : delete file2
+@enduml

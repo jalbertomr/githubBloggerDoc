@@ -1,0 +1,534 @@
+mkdir gitLab01
+cd gitLab01
+vi file1          --create file1
+ls
+-- add .gitignore ---
+vi .gitignore
+  *.idea
+  *.iml
+  src/
+git init
+ls -a
+git config --global user.name "jalbertomr"
+git config --global user.email "jalbertomr@yahoo.com"
+git config --list
+git status
+git add file1
+git status
+git commit -m add "add file file1"
+--tree areas diagram---
+git status
+git log
+cp file1 file2
+vi file2
+vi file1
+git status
+git diff
+git add file1 file2  or 
+git add . or
+git add f*
+git status
+git diff --staged
+git commit -m "add file2 and edit file1"
+git log
+git log -p
+git rm file2
+git status
+git commit      --add message "file2 deleted"
+git log
+=== EDIT FILE bring from stage, no add, no commit
+vi file1
+git diff
+git status
+git checkout -- file1
+git diff
+git status
+=== UNDO STAGING OF FILES === 
+vi file1
+git diff
+git add file1
+git diff
+git diff --staged
+git status
+git reset HEAD file1
+git status
+git checkout -- file1
+git status
+=== RESTORE FROM AN EARLIER COMMIT
+git log -- file2
+git checkout 9ddb9 -- file2
+ls
+git status
+git commit -m "restore file2"
+=== .gitignore
+touch myapp.pyc
+mkdir logs
+touch logs/log1.log
+touch logs/log2.log
+git status
+vi .gitignore
+*.pyc
+logs/
+git status
+git add .
+git commit -m "add .gitignore file"
+
+
+git log
+git log -p
+git reflog
+git cat-file -p HEAD
+git ls-tree HEAD
+git commit --amend
+git log --oneline
+git stash list
+git reflog
+git log -2
+git log -p -2
+git log --graph
+git remote
+git tag
+gitk
+git log -1 HEAD
+git add -i
+rm -r .git
+echo "file1 v1" > file1
+git ls-tree -r HEAD
+git ls-files -s
+git --version
+git reset --mixed HEAD file1   <-- with path deprecated win2.23
+HEAD~                          <-- padre de HEAD
+git commit -am "message commit"
+
+
+GIT RESET
+
+
+                  HEAD
+<1>      <2>      <3>
+
+WD        S        H
+<3>       <3>     <3>
+
+git reset --hard HEAD~
+
+        HEAD
+<1>      <2>      <3>
+
+WD        S        H
+<2>      <2>      <2>        <-- Destruction of WD  OK
+
+=========================
+                  HEAD
+<1>      <2>      <3>
+
+WD        S        H
+<3>       <3>     <3>
+
+git reset --mixed HEAD~
+
+         HEAD
+<1>      <2>      <3>
+
+WD        S        H
+<3>      <2>      <2>      <-- no lose work  OK
+
+============================
+                  HEAD
+<1>      <2>      <3>
+
+WD        S        H
+<3>       <3>     <3>
+
+git reset --soft HEAD~
+
+        HEAD
+<1>      <2>      <3>
+
+WD        S        H
+<3>    <2green>   <3>            <-- corrected git re
+
+=================================
+   GIT RESET WITH file
+
+                  HEAD
+<1>      <2>      <3>
+
+WD        S        H
+<3>       <3>     <3>
+
+git reset --mixed HEAD somefile.ext   <-- deprecated ver. 2.23.0win git reset -- <paths>
+
+                  HEAD ???
+<1>      <2>      <3>
+
+WD        S        H
+<3>      <2green> <3>   ???
+
+
+git reset somefile.ext   <-- unstash somefile.ext
+
+git reset --hard somefile.ext
+
+=========================================
+
+                  HEAD
+<1>      <2>      <3>
+
+WD        S        H
+<3>       <3>     <3>
+
+git reset HEAD~2 somefile.ext
+git reset e343fb somefile.ext
+
+                  HEAD
+<1>      <2>       <3>
+
+WD        S         H
+<3>     <1green>   <3>
+
+git checkout somefile.ext
+
+                  HEAD
+<1>      <2>       <3>
+
+WD        S         H
+<1>     <1green>   <3>
+
+============================================
+
+                  HEAD
+<1>      <2>      <3>
+
+WD        S        H
+<3>       <3>     <3>
+
+git reset --soft HEAD~
+
+        HEAD
+<1>      <2>      <3>
+
+WD        S        H
+<3>       <3green>     <2>   <-- OK
+
+==========================================
+
+       4effea     HEAD
+<1>      <2>      <3>
+
+WD        S        H
+<3>       <3>     <3>
+
+git reset 4effea
+
+        HEAD
+<1>      <2>      <3>
+
+WD        S        H
+<3>       <3red>     <2>   <-- OK
+
+==========================================
+
+                  HEAD
+<1>      <2>      <3>
+
+WD        S        H
+<3>       <3>     <3>
+
+git reset --hard HEAD~
+
+        HEAD
+<1>      <2>      <3>
+
+WD        S        H
+<2>       <2>     <2>   <-- OK
+
+==========================================
+
+git add file
+
+git reset file
+
+==========================================
+
+cd30a             HEAD
+<1>      <2>      <3>
+
+WD        S        H
+<3>       <3>     <3>
+
+git reset cd40a -- file
+
+HEAD
+<1>          <2>         <3>
+
+WD            S           H
+<3>          < >         <1>   <--
+   -file1 v1     -file1 v3
+   +file1 v3     +file1 v1
+
+==========================================
+Correct a Commit witch has forgotten something with git reset --soft HEAD~X
+
+HEAD~1          HEAD~1          HEAD
+<file1:v1>      <file1:v2>      <file1:v3>
+                <file2:v1>      <file2:v1>
+
+    WD                S             H
+<file1:v3>       <file1:v3>     <file1:v3>
+<file2:v1>       <file2:v1>     <file2:v1>
+
+git reset --soft HEAD~2
+
+HEAD
+<file1:v3>      <file1:v2>      <file1:v3>
+<file2:v1>      <file2:v1>      <file2:v1>
+
+    WD                S             H
+<file1:v3>       <file1:v3>     <file1:v1->v3green>
+<file2:v1>       <file2:v1>     <file2:v1green>
+
+===========================================
+
+git reset [branch] file == git reset --hard [branch] file NOT ALLOWED RESET with PATHs
+
+=========================================================
+RESET VS CHECKOUT
+
+echo "file1:v1" > file1
+git add file1
+git commit -m "file1:v1"
+
+echo "file2:v1" > file2
+git add file2
+git commit -m "file1,2:v1"     <-- COMMIT 01
+    WD                S             H
+<file1:v1>       <file1:v1>     <file1:v1>
+
+echo "file1:v2" > file1
+git add file1
+git commit -m "file1:v2"
+
+echo "file2:v2" > file2
+git add file2
+git commit -m "file1,2:v2"     <-- COMMIT 02
+    WD                S             H
+<file1:v2>       <file1:v2>      <file1:v2>
+<file2:v1>       <file2:v1>      <file2:v1>
+
+git branch develop
+
+AHORA hacemos git reset master, develop y master apuntan al mismo commit
+
+
+
+
+
+
+
+
+
+==========================================
+FIXING MISTAKES with GIT RESET
+
+echo "file1:v1" > file1
+git add file1
+git commit -m "file1:v1"               <-- COMMIT 01
+    WD                S             H
+<file1:v1>       <file1:v1>     <file1:v1>
+
+echo "file2:v1 con error" > file2
+git add file2
+git commit -m "file2:v1 con error"     <-- COMMIT 02
+    WD                S             H
+<file1:v2>       <file1:v2>      <file1:v2>
+<file2:v1error>  <file2:v1error> <file2:v1error>
+
+git reset --hard HEAD~1 or HEAD~                <--- HEAD a COMMIT01, se elimina State actual
+    WD                S             H
+<file1:v1>       <file1:v1>     <file1:v1>
+
+git reflog
+
+ls
+cat file1
+cat file2            <-- no existe
+
+git reset COMMIT02                                  <-- Regresamos a COMMIT02, con opcion de aceptar cambios
+git restore file2                                   <-- se recupera file2 de deleted state
+    WD                S             H
+<file1:v2>       <file1:v2>      <file1:v2>
+<file2:v1error>  <file2:v1error> <file2:v1error>
+
+cat file1
+
+vi file1:v2 <-- edited
+vi file2:v2 <-- fixing mistake
+
+git commit -am "file1:v1 edited, file2:v2 fixed"    <-- COMMIT03 se ajusta error
+git branch feature                                  <-- Se marca branch feature
+
+vi file1:v3 <-- new feature
+git commit -am "file1 v3 new feature"               <-- COMMIT04 se continua avanzando en feature
+
+git branch -a        ---list all branches
+
+===================================================================
+git log --all --decorate --oneline --graph
+alias logg="git log --all --decorate --oneline --graph"
+
+===================================================================
+BRANCH AND MERGE
+
+file1:v1
+commit 01
+file1:v2
+file2:v1
+commit 02
+file1:v3
+file2:v3
+commit 03
+==================================================================
+FastForward Merge
+            master
+               |
+C0 <-- C1 <-- C2 <-- C3
+                      |
+                     branchA
+
+git checkout -b "branchA"
+git commit -m "test" --allow-empty
+git logg
+git checkout master
+git merge branchA
+=================================================================
+3way-merge
+            master
+               |
+C0 <-- C1 <-- C2 <-- C4
+                 \
+                   \
+                     C3  <-- C5
+                              |
+                             branchA
+
+C2 common ancestor
+C4 Snapshot to Merge into
+C5 Snapshot to Menge in
+
+on branchA do
+git commit -m "test" --allow-empty
+git commit -m "test" --allow-empty
+git commit -m "test" --allow-empty
+git checkout master
+git commit -m "test on master" --allow-empty
+logg
+on master do
+git merge branchA        --- will do a recursive strategy
+
+==================================================================
+Branching and Mergin
+
+git diff master..SDN
+git branch --merged
+gir branch -d SDN
+
+git checkout -b dev
+git stash
+git stash list
+git stash list -p
+git stash apply
+git stash pop
+git stash stash@{9}
+git stash apply stash@{2}
+git stash save "message"
+
+======================================================================
+git diff --ours
+git diff --theirs
+git diff --base
+git clean -f
+git checkout --conflict=diff3 hello.rb
+git config --global merge.conflictstyle diff3
+git checkout --ours
+git checkout --theirs
+git log --oneline --left-right  HEAD..MERGE_HEAD
+git log --cc -p -1
+=====================================================================
+git bundle create /tmp/cherrypicklab --all
+git clone /tmp/cherrypicklab newFolder
+
+====================================================================
+REMOTES
+- Create REpo on Bety Github
+- On Bety Laptop, clone Bety Github REpo
+- config git name, email
+- git remote
+	git remote -v
+alias logg='git log --all --decorate --oneline --graph
+shows all pointers sinchronized
+- git checkout origin/master
+detached head
+git checkout master
+- " git fetch and merge "
+on Guthub Bety create a new file
+git status
+git fetch origin
+git status   - branch behind origin/master
+logg
+git merge origin/master   - fast-forward
+logg       -- sinchonized
+git pull
+- " git push"
+on local repo modify file1
+logg
+git status      - branch is ahead or origin/master
+git push origin master
+logg
+-check commits on bety github
+-- "  Create github fork " ---
+fork Bety Github repo, bob logged on github, find bety repo and fork it
+bob local clone bob bety forked github repo
+bob new commit, push
+ detailed operations,
+git remote -v
+git remote add upstream git@github.com:bety-remote/newauto.git
+git remote remove <remote name>
+Bety github make a commit
+-- sync with upstream --
+local bob : logg
+git fetch upstream
+logg    -- shows a new tracking branch
+on bety local create a new file2
+git status - stage and commit
+logg   -- out of sync
+git push origin master
+logg    -- in sync
+on bob local
+git fetch upstream
+logg    --show the new bety commit
+git merge upstream/master
+logg
+--- Remote Branches ---
+bob create on local a new branch branch_02
+modify file2 on branch_02
+push to bob github
+do a pull request to bety
+bob delete the branch_02
+bob resync local and github repo as mary
+on bob local
+git checkout -b "branch_02"
+git branch
+git branch -a
+git branch -r
+edit file2 and commit
+logg    -- shows ahead of masters
+git push origin branch_02
+logg      -- shows bob remote has now origin/branch_02
+on Github bob see branch master
+change to branch_02-  shows that is ahead of bety-remote/master
+New pull request
+name and description
+On bety receive a pull request
+bety can do several actions
+when done bob remove branch_02 and resyn with mary

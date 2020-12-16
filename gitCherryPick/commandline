@@ -1,0 +1,285 @@
+$ git init
+Initialized empty Git repository in C:/Users/bext/Documents/workspaceSTS448/gitLab01/.git/
+
+bext@DESKTOP-NLF0058 MINGW64 ~/Documents/workspaceSTS448/gitLab01 (master)
+$ git add f*
+warning: LF will be replaced by CRLF in file1.
+The file will have its original line endings in your working directory
+
+bext@DESKTOP-NLF0058 MINGW64 ~/Documents/workspaceSTS448/gitLab01 (master)
+$ git commit -m "c1"
+[master (root-commit) d98efc1] c1
+ 1 file changed, 2 insertions(+)
+ create mode 100644 file1
+
+bext@DESKTOP-NLF0058 MINGW64 ~/Documents/workspaceSTS448/gitLab01 (master)
+$ vi file1
+
+bext@DESKTOP-NLF0058 MINGW64 ~/Documents/workspaceSTS448/gitLab01 (master)
+$ git commit -am "c2"
+warning: LF will be replaced by CRLF in file1.
+The file will have its original line endings in your working directory
+[master cea1593] c2
+ 1 file changed, 1 insertion(+)
+
+bext@DESKTOP-NLF0058 MINGW64 ~/Documents/workspaceSTS448/gitLab01 (master)
+$ logg
+* cea1593 (HEAD -> master) c2
+* d98efc1 c1
+
+bext@DESKTOP-NLF0058 MINGW64 ~/Documents/workspaceSTS448/gitLab01 (master)
+$ git branch branch-cherry-pick
+
+bext@DESKTOP-NLF0058 MINGW64 ~/Documents/workspaceSTS448/gitLab01 (master)
+$ logg
+* cea1593 (HEAD -> master, branch-cherry-pick) c2
+* d98efc1 c1
+
+bext@DESKTOP-NLF0058 MINGW64 ~/Documents/workspaceSTS448/gitLab01 (master)
+$ vi file1
+
+bext@DESKTOP-NLF0058 MINGW64 ~/Documents/workspaceSTS448/gitLab01 (master)
+$ logg
+* cea1593 (HEAD -> master, branch-cherry-pick) c2
+* d98efc1 c1
+
+bext@DESKTOP-NLF0058 MINGW64 ~/Documents/workspaceSTS448/gitLab01 (master)
+$ git commit -am "c3"
+warning: LF will be replaced by CRLF in file1.
+The file will have its original line endings in your working directory
+[master cbbd184] c3
+ 1 file changed, 1 insertion(+)
+
+bext@DESKTOP-NLF0058 MINGW64 ~/Documents/workspaceSTS448/gitLab01 (master)
+$ logg
+* cbbd184 (HEAD -> master) c3
+* cea1593 (branch-cherry-pick) c2
+* d98efc1 c1
+
+bext@DESKTOP-NLF0058 MINGW64 ~/Documents/workspaceSTS448/gitLab01 (master)
+$ git checkout branch-cherry-pick
+Switched to branch 'branch-cherry-pick'
+
+bext@DESKTOP-NLF0058 MINGW64 ~/Documents/workspaceSTS448/gitLab01 (branch-cherry-pick)
+$ vi file2
+
+bext@DESKTOP-NLF0058 MINGW64 ~/Documents/workspaceSTS448/gitLab01 (branch-cherry-pick)
+$ vi file1
+
+bext@DESKTOP-NLF0058 MINGW64 ~/Documents/workspaceSTS448/gitLab01 (branch-cherry-pick)
+$ git add f*
+warning: LF will be replaced by CRLF in file2.
+The file will have its original line endings in your working directory
+
+bext@DESKTOP-NLF0058 MINGW64 ~/Documents/workspaceSTS448/gitLab01 (branch-cherry-pick)
+$ git commit -m "feature-a"
+[branch-cherry-pick 7b527f0] feature-a
+ 2 files changed, 3 insertions(+)
+ create mode 100644 file2
+
+bext@DESKTOP-NLF0058 MINGW64 ~/Documents/workspaceSTS448/gitLab01 (branch-cherry-pick)
+$ logg
+* 7b527f0 (HEAD -> branch-cherry-pick) feature-a
+| * cbbd184 (master) c3
+|/
+* cea1593 c2
+* d98efc1 c1
+
+bext@DESKTOP-NLF0058 MINGW64 ~/Documents/workspaceSTS448/gitLab01 (branch-cherry-pick)
+$ vi file2
+
+bext@DESKTOP-NLF0058 MINGW64 ~/Documents/workspaceSTS448/gitLab01 (branch-cherry-pick)
+$ vi file1
+
+bext@DESKTOP-NLF0058 MINGW64 ~/Documents/workspaceSTS448/gitLab01 (branch-cherry-pick)
+$ cat file1
+file1
+A
+B
+file2:a
+file2:b
+
+bext@DESKTOP-NLF0058 MINGW64 ~/Documents/workspaceSTS448/gitLab01 (branch-cherry-pick)
+$ cat file2
+file2
+a
+b
+
+bext@DESKTOP-NLF0058 MINGW64 ~/Documents/workspaceSTS448/gitLab01 (branch-cherry-pick)
+$ git commit -am "feature-ab"
+warning: LF will be replaced by CRLF in file2.
+The file will have its original line endings in your working directory
+[branch-cherry-pick 80123a9] feature-ab
+ 2 files changed, 2 insertions(+)
+
+bext@DESKTOP-NLF0058 MINGW64 ~/Documents/workspaceSTS448/gitLab01 (branch-cherry-pick)
+$ logg
+* 80123a9 (HEAD -> branch-cherry-pick) feature-ab
+* 7b527f0 feature-a
+| * cbbd184 (master) c3
+|/
+* cea1593 c2
+* d98efc1 c1
+
+bext@DESKTOP-NLF0058 MINGW64 ~/Documents/workspaceSTS448/gitLab01 (branch-cherry-pick)
+$ vi file2
+
+bext@DESKTOP-NLF0058 MINGW64 ~/Documents/workspaceSTS448/gitLab01 (branch-cherry-pick)
+$ vi file1
+
+bext@DESKTOP-NLF0058 MINGW64 ~/Documents/workspaceSTS448/gitLab01 (branch-cherry-pick)
+$ cat file1
+file1
+A
+B
+file2:a
+file2:b
+file2:c
+
+bext@DESKTOP-NLF0058 MINGW64 ~/Documents/workspaceSTS448/gitLab01 (branch-cherry-pick)
+$ cat file2
+file2
+a
+b
+c
+
+bext@DESKTOP-NLF0058 MINGW64 ~/Documents/workspaceSTS448/gitLab01 (branch-cherry-pick)
+$ logg
+* 80123a9 (HEAD -> branch-cherry-pick) feature-ab
+* 7b527f0 feature-a
+| * cbbd184 (master) c3
+|/
+* cea1593 c2
+* d98efc1 c1
+
+bext@DESKTOP-NLF0058 MINGW64 ~/Documents/workspaceSTS448/gitLab01 (branch-cherry-pick)
+$ git commit -am "feature-abc"
+warning: LF will be replaced by CRLF in file2.
+The file will have its original line endings in your working directory
+[branch-cherry-pick 1c27076] feature-abc
+ 2 files changed, 2 insertions(+)
+
+bext@DESKTOP-NLF0058 MINGW64 ~/Documents/workspaceSTS448/gitLab01 (branch-cherry-pick)
+$ logg
+* 1c27076 (HEAD -> branch-cherry-pick) feature-abc
+* 80123a9 feature-ab
+* 7b527f0 feature-a
+| * cbbd184 (master) c3
+|/
+* cea1593 c2
+* d98efc1 c1
+
+bext@DESKTOP-NLF0058 MINGW64 ~/Documents/workspaceSTS448/gitLab01 (branch-cherry-pick)
+$ git checkout master
+Switched to branch 'master'
+
+bext@DESKTOP-NLF0058 MINGW64 ~/Documents/workspaceSTS448/gitLab01 (master)
+$ git cherry-pick 80123a9
+error: could not apply 80123a9... feature-ab
+hint: after resolving the conflicts, mark the corrected paths
+hint: with 'git add <paths>' or 'git rm <paths>'
+hint: and commit the result with 'git commit'
+
+bext@DESKTOP-NLF0058 MINGW64 ~/Documents/workspaceSTS448/gitLab01 (master|CHERRY-PICKING)
+$ git status
+On branch master
+You are currently cherry-picking commit 80123a9.
+  (fix conflicts and run "git cherry-pick --continue")
+  (use "git cherry-pick --abort" to cancel the cherry-pick operation)
+
+Unmerged paths:
+  (use "git add/rm <file>..." as appropriate to mark resolution)
+        both modified:   file1
+        deleted by us:   file2
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+bext@DESKTOP-NLF0058 MINGW64 ~/Documents/workspaceSTS448/gitLab01 (master|CHERRY-PICKING)
+$ git diff
+diff --cc file1
+index cfb4823,c696573..0000000
+--- a/file1
++++ b/file1
+@@@ -1,4 -1,5 +1,9 @@@
+  file1
+  A
+  B
+++<<<<<<< HEAD
+ +C
+++=======
++ file2:a
++ file2:b
+++>>>>>>> 80123a9... feature-ab
+* Unmerged path file2
+
+bext@DESKTOP-NLF0058 MINGW64 ~/Documents/workspaceSTS448/gitLab01 (master|CHERRY-PICKING)
+$ git diff --ours
+* Unmerged path file1
+diff --git a/file1 b/file1
+index cfb4823..ec6bc6c 100644
+--- a/file1
++++ b/file1
+@@ -1,4 +1,9 @@
+ file1
+ A
+ B
++<<<<<<< HEAD
+ C
++=======
++file2:a
++file2:b
++>>>>>>> 80123a9... feature-ab
+* Unmerged path file2
+
+bext@DESKTOP-NLF0058 MINGW64 ~/Documents/workspaceSTS448/gitLab01 (master|CHERRY-PICKING)
+$ git diff --theirs
+* Unmerged path file1
+diff --git a/file1 b/file1
+index c696573..ec6bc6c 100644
+--- a/file1
++++ b/file1
+@@ -1,5 +1,9 @@
+ file1
+ A
+ B
++<<<<<<< HEAD
++C
++=======
+ file2:a
+ file2:b
++>>>>>>> 80123a9... feature-ab
+* Unmerged path file2
+
+bext@DESKTOP-NLF0058 MINGW64 ~/Documents/workspaceSTS448/gitLab01 (master|CHERRY-PICKING)
+$ vi file1
+
+bext@DESKTOP-NLF0058 MINGW64 ~/Documents/workspaceSTS448/gitLab01 (master|CHERRY-PICKING)
+$ vi file2
+
+bext@DESKTOP-NLF0058 MINGW64 ~/Documents/workspaceSTS448/gitLab01 (master|CHERRY-PICKING)
+$ ls
+file1  file2  gitLab01.iml  src/
+
+bext@DESKTOP-NLF0058 MINGW64 ~/Documents/workspaceSTS448/gitLab01 (master|CHERRY-PICKING)
+$ git add f*
+
+bext@DESKTOP-NLF0058 MINGW64 ~/Documents/workspaceSTS448/gitLab01 (master|CHERRY-PICKING)
+$ git commit
+[master 8e32935] cherrying-pick feature-ab
+ Date: Wed Dec 9 11:02:31 2020 -0600
+ 2 files changed, 5 insertions(+)
+ create mode 100644 file2
+
+bext@DESKTOP-NLF0058 MINGW64 ~/Documents/workspaceSTS448/gitLab01 (master)
+$ logg
+* 8e32935 (HEAD -> master) cherrying-pick feature-ab
+* cbbd184 c3
+| * 1c27076 (branch-cherry-pick) feature-abc
+| * 80123a9 feature-ab
+| * 7b527f0 feature-a
+|/
+* cea1593 c2
+* d98efc1 c1
+
+bext@DESKTOP-NLF0058 MINGW64 ~/Documents/workspaceSTS448/gitLab01 (master)
+$

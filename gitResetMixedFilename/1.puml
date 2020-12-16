@@ -1,0 +1,87 @@
+@startuml
+scale 1000 width
+title create file2, modify file1, add, commit, delete file2
+skinparam roundCorner 20
+actor User
+box "<size:20>GIT                     jalbertomr.blogspot.com</size>"
+participant "Working dir" as WD #FF5555
+participant "Stage" as S #99FF99
+database "History" as H
+
+== Change not staged for commit restored by unmodifiying file ==
+User -> WD: modified file1
+note left of S #Salmon
+file1 modified
+end note
+note right of S
+<img difffile1createdmodified.PNG>
+end note
+
+User -> WD : unmodified file1
+note right of WD #lightgray
+file1 created
+end note
+== Change not staged for commit restored by command ==
+User -> WD: modified file1
+note left of S #Salmon
+file1 modified
+end note
+WD -> S : <color:limegreen><back:black><b> git restore file1 </b></back></color>    .
+note right of WD #lightgray
+file1 created
+end note
+
+
+== modify file1, create file2, add, and commit  ==
+note right of H
+file1 created
+end note
+User -> WD: modified file1
+note left of S #Salmon
+file1 modified
+end note
+User -> WD : create file2
+note left of S #Salmon
+file2 created
+end note
+WD -> S : <color:limegreen><back:black><b> git add file* </b></back></color>    .
+note right of S #99FF99
+file1 modified
+end note
+note right of S #99FF99
+file2 created
+end note
+WD -> S : <color:limegreen><back:black><b> git commit -m  "file1 modified, file2 created" </b></back></color>    .
+note right of H
+file1 modified
+end note
+note right of H
+file2 created
+end note
+== Delete File2 from Working Directory and in Stage ready to Commit==
+WD -> S : <color:limegreen><back:black><b> git rm file2 </b></back></color>    .
+note right of WD #lightgray
+DELETED: [file2 created]
+end note
+note right of S #99FF99
+DELETED: [file2 created]
+end note
+WD --> User : delete file2
+== Delete File1 from Working Directory, Stage ==
+WD -> S : <color:limegreen><back:black><b> rm file1 </b></back></color>    .
+note right of WD #lightgray
+DELETED: [file1 modified]
+end note
+note left of S #salmon
+DELETED: [file1 modified]
+end note
+WD --> User : delete file2
+
+WD -> S : <color:limegreen><back:black><b> git commit -m "file2 deleted" </b></back></color>    .
+note right of H
+file2 deleted
+end note
+
+
+
+@enduml

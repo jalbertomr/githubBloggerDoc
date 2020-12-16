@@ -1,0 +1,41 @@
+@startuml
+title <color:silver>Git State Transition Diagram
+scale 900 width
+skinparam backgroundColor royalblue
+skinparam arrowcolor white
+skinparam arrowfontStyle bold
+skinparam arrowfontcolor w
+
+skinparam state {
+  backgroundColor SkyBlue
+  BorderColor gray
+  backgroundColor<< Stage >> LimeGreen
+  backgroundColor<< WorkDir >> Tomato
+  backgroundColor<< History >> Khaki
+  FontSize 15
+  FontStyle bold
+  fontcolor navy
+}
+
+state "History                                                 jalbertomr.blogspot.com" as History << History >>{
+  init << History >> -r-> 43fe43 : commit
+  43fe43 << History >> -r-> a432ff : commit
+  a432ff << History >> -r-> 12a43b << History >>: commit
+}
+
+state "Stage (index)" as Stage  << Stage >>{
+}
+
+state Working_Directory << WorkDir >>{
+}
+
+History -d-> Stage : git checkout HEAD -- files
+History -d-> Stage : git checkout -- files
+History -d-> Working_Directory : git checkout HEAD -- files
+Stage -u-> History : git commit files
+Stage -u-> Working_Directory : git reset -- files
+Working_Directory -u-> Stage : git add (files)
+Working_Directory -u-> History : git commit -a (files)
+
+}
+@enduml
